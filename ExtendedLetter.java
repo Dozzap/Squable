@@ -37,14 +37,11 @@ public class ExtendedLetter extends Letter{
      * @return true or false
      */
     public boolean equals(Object other){
-        if (other instanceof Object){
+        if (other instanceof ExtendedLetter){
             if (this.family == ((ExtendedLetter)other).family){
                 related = true;
             }
-            if (this.content == ((ExtendedLetter)other).content){
-                return true;
-            }
-            
+            return (this.content == ((ExtendedLetter)other).content);
         }
         return false;
     }
@@ -67,16 +64,16 @@ public class ExtendedLetter extends Letter{
      * @return arrLetter an array of letter instances
      */
     public static Letter[] fromStrings(String[] content,int[] codes){
-        Letter [] arrLetter = new Letter[content.length];
-        for (int i = 0; i <arrLetter.length; i++){
+        Letter [] arrayLetter = new Letter[content.length];
+        for (int i = 0; i <arrayLetter.length; i++){
             if (codes == null){
-                arrLetter[i] = new ExtendedLetter(content[i]);
+                arrayLetter[i] = new ExtendedLetter(content[i]);
             }
             else{
-                arrLetter[i] = new ExtendedLetter(content[i], codes[i]);
+                arrayLetter[i] = new ExtendedLetter(content[i], codes[i]);
             }
         }
-        return arrLetter;
+        return arrayLetter;
     }
 
 }

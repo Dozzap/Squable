@@ -1,54 +1,51 @@
-/**
- * @author Dhylan Usi
- * Word class
- * 
- */
-
-public class Word{
-    // declares head of linkedlist
+public class Word {
     private LinearNode<Letter> firstLetter;
 
-    /**
-     * Constructor for the Word class
-     * @param letters
-     */
     public Word(Letter[] letters){
-        this.firstLetter = new LinearNode<Letter>(letters[0]);
-        LinearNode<Letter> object = this.firstLetter;
         LinearNode<Letter> temp;
-        
-        for(int i = 1; i < letters.length; i++) {
+         
+
+        this.firstLetter = new LinearNode<Letter>(letters[0]);
+        LinearNode<Letter> headObject = this.firstLetter;
+
+        for (int i = 1; i <letters.length; i++){
             temp = new LinearNode<Letter>(letters[i]);
-            object.setNext(temp);
-            object = object.getNext();
+
+            headObject.setNext(temp);
+
+            headObject = headObject.getNext();
         }
+
     }
-    /**
-     * returns a string print of the class Word instances
-     * @return String
-     */
+
+
     public String toString(){
-        String words = "Word: ";
-        LinearNode<Letter> current = this.firstLetter;
-        
-        while (current != null){
-            words += current.getElement().toString()+ " ";
-            current = current.getNext();
+        String returnString = "Word: ";
+
+        LinearNode <Letter> tempIterator = this.firstLetter;
+
+        while(tempIterator != null){
+
+            returnString+= tempIterator.getElement().toString() + " ";
+
+            tempIterator = tempIterator.getNext();
+
+
         }
-        return words;
+
+        return returnString;
+
     }
-    /**
-     * Labels each letter of guessWord after checking similiraties with mysteryWord
-     * @param mystery
-     * @return true or false
-     */
+
+    //Checks and labels each value of the guessWord
+    //Has two statements, one where both words are them same, and the other where it checks for each
     public boolean labelWord(Word mystery){
         LinearNode<Letter> mysteryWord = mystery.firstLetter;
         LinearNode<Letter> guessWord = this.firstLetter;
-        //first checks if both words are the same
-        //if they are, all letters will be set into correct and will return true
+        
+        //if both words' toString are equal. for example mysteryWord = "Word: O B J E C T" and guessWord = "Word: O B J E C T" are both the same, this statement will be true.
         if (mysteryWord.toString().equals(guessWord.toString())){
-            mysteryWord = mystery.firstLetter;
+            //Since both words are equal in both value and position, only 1 loop is needed, and each values will be set to correct.  will return true aswell
             while (mysteryWord != null){
                 guessWord.getElement().setCorrect();
                 guessWord = guessWord.getNext();
@@ -56,10 +53,18 @@ public class Word{
             }
             return true;
         }
-        //if not, it will go to this loop that iterates from each letter of guessWord against mysteryWord and set the letters into used
-        //this will return false
+
+        /* 2nd statement where the guessWord and mysteryWord are not the same, both in order and value. Will iterate from mysteryWord then guessWord, and see if some values of
+        *guessWord are used in the mysteryWord
+        *
+        *this will return false
+        */
         else{
-            guessWord= this.firstLetter;
+            /* this nested loop will get the first letter of guessWord then set it to null and get the firstLetter of mysteryWord.
+             * the letter from guessWord is then checked to a value of mysteryWord, if its used, the label will be changed to used. and will test for the next letter.
+             * it will then go to the next letter
+             * this loop will continue until there is no more letters in guessWord;
+             */
             while (guessWord != null){
                 guessWord.getElement().setUnused();
             mysteryWord = mystery.firstLetter;
@@ -72,10 +77,10 @@ public class Word{
                 else{mysteryWord = mysteryWord.getNext();}
             }
             guessWord = guessWord.getNext();
-        }
+            }
         //this will check if the letter of the guessWord is in the right and in the same order as the letter from mysteryWord and sets the letters to correct
-        guessWord= this.firstLetter;
-        mysteryWord = mystery.firstLetter;
+            guessWord= this.firstLetter;
+            mysteryWord = mystery.firstLetter;
 
             while(mysteryWord != null && guessWord != null){
                 if (guessWord.getElement().equals(mysteryWord.getElement())){

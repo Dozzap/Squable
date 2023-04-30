@@ -1,3 +1,4 @@
+
 /**
  * @author Dhylan Usi
  * Describe word linked list
@@ -13,7 +14,7 @@ public class WordLL {
      */
     public WordLL(Word mystery){
         history = new LinearNode<Word>();
-        this.mysteryWord = mystery;
+        mysteryWord = mystery;
     }
     /**
      * checks if the letters of guess are in mysteryWord, returns a boolean
@@ -26,11 +27,17 @@ public class WordLL {
         LinearNode<Word> guessWord = new LinearNode<Word>();
         guessWord.setElement(guess);
 
-        LinearNode <Word> temp = history.getNext();
+        LinearNode <Word> nextHistory = history.getNext();
         history.setNext(guessWord);
-        guessWord.setNext(temp);
+        guessWord.setNext(nextHistory);
 
-        return guess.labelWord(mysteryWord);
+
+        if (guess.labelWord(mysteryWord)){
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
     /**
@@ -40,11 +47,11 @@ public class WordLL {
     public String toString(){
         
         String words = "";
-        LinearNode <Word> history1 = history.getNext();
-        while (history1 != null){
-            words = words + (history1.getElement()).toString() + '\n';
-            history1 = history1.getNext();
-
+        LinearNode <Word> wordHistory = history.getNext();
+        while (wordHistory  != null){
+            words = words + (wordHistory.getElement()).toString() + '\n';
+            wordHistory  = wordHistory.getNext();
+            
         }
         
         return words;
